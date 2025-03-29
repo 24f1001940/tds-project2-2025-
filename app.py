@@ -811,3 +811,8 @@ Miranda's mind raced with the implications of influence, concealing the very sec
     else:
         answer = get_llm_answer(question)
         return {"answer": answer}
+    
+
+@app.get("/")
+def home():
+    return {"message": "Hello, this is my FastAPI app on Vercel!"}
