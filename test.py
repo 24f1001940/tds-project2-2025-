@@ -19,7 +19,7 @@ questions = [
     "convert it into single json object",
     "paste the json at tools-in-data-science.pages.dev/jsonhash",
     "find all <div>s having a foo class",
-    "sum up all the values where the symbol matches Š OR Œ OR ™",
+    "sum up all the values where the symbol matches Š or Œ or ™",
     "create a github account",
     "replace all IITM with IIT Madras",
     "list all files in the folder along with their date and file size",
@@ -54,7 +54,7 @@ questions = [
     "deploy a python api in vercel",
     "create a github action",
     "push an image to docker hub",
-    "Write a fastapi server to serve data",
+    "write a fastapi server to serve data",
     "ngrok url",
     "llm sentiment analysis",
     "llm token cost",
@@ -64,5 +64,16 @@ questions = [
 
 
 for question in questions:
-    response = requests.post(API_URL, data={"question": question})
-    print(f"Question: {question}\nAnswer: {response.json()}\n")
+    try:
+        response = requests.post(API_URL, data={"question": question})
+        response.raise_for_status()  # Raise an error for bad responses (4xx, 5xx)
+
+        try:
+            json_response = response.json()
+            print(f"Question: {question}\nAnswer: {json_response}\n")
+        except json.JSONDecodeError:
+            print(f"⚠️ ERROR: Invalid JSON response for question: {question}")
+            print(f"Response Text: {response.text}\n")
+
+    except requests.exceptions.RequestException as e:
+        print(f"❌ HTTP ERROR: {e}")

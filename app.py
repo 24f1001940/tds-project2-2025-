@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, Form
+from flask import Flask, jsonify,request,render_template
 import subprocess ,platform
 from PIL import Image
 from io import BytesIO
@@ -11,7 +11,7 @@ import openai
 import os
 import json
 
-app = FastAPI()        
+app = Flask(__name__)
 
 # Set AI Proxy API base
 openai.api_base = "https://aiproxy.sanand.workers.dev/openai/v1"
@@ -49,10 +49,10 @@ def get_llm_answer(question):
     except openai.error.OpenAIError as e:
         return f"Error: {str(e)}"
 
-@app.post("/api/")
-async def solve_question(
-    question: str = Form(...), file: UploadFile = File(None)
-):
+@app.route("/api/", methods=["POST"])
+def solve_question():
+    question = request.form.get("question")
+    file= request.files.get("file")
     question_lower = question.lower()
     
     if any(phrase in question for phrase in ["vs code version", "code -s", "visual studio code", "terminal", "command prompt"]):
@@ -796,7 +796,7 @@ Miranda's mind raced with the implications of influence, concealing the very sec
 
     
     elif file:
-        zip_data = await file.read()  
+        zip_data =  file.read()  
         zip_buffer = io.BytesIO(zip_data)  
         zip_buffer.seek(0)  
 
@@ -812,7 +812,11 @@ Miranda's mind raced with the implications of influence, concealing the very sec
         answer = get_llm_answer(question)
         return {"answer": answer}
     
-
-@app.get("/")
+@app.route("/")
 def home():
-    return {"message": "Hello, this is my FastAPI app on Vercel!"}
+    return "<h1>Welcome to the TDS Solver API By MOHD SAQIB in 2025 </h1><p>Use the <code>/api/</code> endpoint to send questions.</p>"
+ 
+    
+
+if __name__ == "__main__":
+    app.run(debug=True,host="0.0.0.0", port=8000)
