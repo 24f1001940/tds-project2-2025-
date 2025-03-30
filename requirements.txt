@@ -1,0 +1,7 @@
+flask
+gunicorn
+pillow
+requests
+pandas
+openai
+zipfile36
