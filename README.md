@@ -1,72 +1,68 @@
-TDS Solver
+# TDS Solver  
 
-Overview
+## Overview  
+**TDS Solver** is an API-based application developed by **Mohd Saqib** to automatically answer graded assignment questions from the *Tools in Data Science* course at **IIT Madras**. The API processes user-provided questions and optional file attachments to extract and return the correct answer.  
 
-TDS Solver is an API-based application designed to automatically answer graded assignment questions from the "Tools in Data Science" course at IIT Madras. The API processes user-provided questions and optional file attachments to extract and return the correct answer.
+## Features  
+✔ Accepts questions as input via API.  
+✔ Supports **CSV** and **ZIP** file uploads.  
+✔ Dynamically extracts answers from provided files.  
+✔ Returns responses in **JSON** format.  
+✔ **Deployed on Vercel** for public access.  
 
-Features
+## API Usage  
 
-Accepts questions as input via API.
+### Endpoint  
+```plaintext
+POST https://tds-project2-2025-new-git-main-mohd-saqibs-projects-351cb01b.vercel.app/api
+```
 
-Supports CSV and ZIP file uploads.
+### Request Format  
 
-Extracts answers dynamically from provided files.
+**Headers:**  
+`Content-Type: multipart/form-data`  
 
-Returns responses in JSON format.
+**Form Data:**  
+- `question` *(string, required)* – The question from the graded assignment.  
+- `file` *(file, optional)* – A **CSV** or **ZIP** file containing the answer.  
 
-Deployed on Vercel for public access.
-
-API Usage
-
-Endpoint:
-
-POST https://your-app.vercel.app/api/
-
-Request Format:
-
-Headers: Content-Type: multipart/form-data
-
-Form Data:
-
-question (string, required) - The question from the graded assignment.
-
-file (file, optional) - A CSV or ZIP file containing the answer.
-
-Example Request (Using cURL):
-
-curl -X POST "https://your-app.vercel.app/api/" \
+### Example Request (Using cURL)  
+```bash
+curl -X POST "https://tds-project2-2025-new-git-main-mohd-saqibs-projects-351cb01b.vercel.app/api" \
   -H "Content-Type: multipart/form-data" \
-  -F "question=What is the value in the 'answer' column of the CSV file?" \
-  -F "file=@extract.csv"
+  -F "question=How many Wednesdays are there in the given dataset?" \
+  -F "file=@dataset.csv"
+```
 
-Example Response:
-
+### Example Response  
+```json
 {
-  "answer": "12345678dd90"
+  "answer": "883"
 }
+```
 
-Deployment
+## Deployment  
+This project is deployed on **Vercel**, ensuring public accessibility. The API runs continuously without requiring manual execution.  
 
-This project is deployed on Vercel to ensure public accessibility. Once deployed, the API runs continuously without requiring manual execution.
+## Installation & Local Setup  
 
-Installation & Local Setup
+To run the API locally:  
 
-To run the API locally:
-
-Clone the repository:
-
+1️⃣ **Clone the repository:**  
+```bash
 git clone https://github.com/your-username/tds-solver.git
 cd tds-solver
+```
 
-Install dependencies:
-
+2️⃣ **Install dependencies:**  
+```bash
 pip install -r requirements.txt
+```
 
-Run the Flask app:
-
+3️⃣ **Run the Flask app:**  
+```bash
 flask run
+```
 
-License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
+## License  
+This project is licensed under the **MIT License**. See the `LICENSE` file for details.  
